@@ -12,7 +12,7 @@ public class SimpleParallax : MonoBehaviour
         startPos = transform.position;
         transform.position = startPos;
     }
-    void Update()
+    void FixedUpdate()
     {
         float cameraX = Camera.main.transform.position.x;
         transform.position = new Vector3(cameraX * moveSpeed,transform.position.y,transform.position.z);
