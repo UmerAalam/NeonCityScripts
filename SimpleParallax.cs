@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class SimpleParallax : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] float moveSpeed;
+    Vector3 startPos;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        startPos = transform.position;
+        transform.position = startPos;
+    }
     void Update()
     {
-        
+        float cameraX = Camera.main.transform.position.x;
+        transform.position = new Vector3(cameraX * moveSpeed,transform.position.y,transform.position.z);
     }
 }
