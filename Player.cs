@@ -6,10 +6,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] KeyCode jumpKey;
     [SerializeField] float moveSpeed;
+    [SerializeField] float flySpeed;
     [SerializeField] float jumpForce;
     [SerializeField] float torqueForce;
     [SerializeField] Rigidbody2D playerRb;
-    float horizontalInput;
+    float horizontalInput,verticalInput;
     bool isGrounded;
     bool canFly;
     bool flyMode;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        canMove = true;
         canFly = false;
         isGrounded = false;
         playerRb = GetComponent<Rigidbody2D>();
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
         CheckFlyMode();
         CheckCanFly();
         horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
     }
     void FixedUpdate()
     {
@@ -74,11 +77,6 @@ public class Player : MonoBehaviour
             canFly = true;
         }
     }
-    void FlyMode()
-    {
-        playerRb.gravityScale = 0f;
-
-    }
     void CheckCanFly()
     {
         if (!canFly)
@@ -103,6 +101,12 @@ public class Player : MonoBehaviour
         {
             FlyMode();
         }
+    }
+    void FlyMode()
+    {
+        playerRb.gravityScale = 0f;
+        Vector2 moveDirection = Vector2.up * verticalInput + Vector2.right * horizontalInput;
+        playerRb.AddForce(moveDirection.normalized * flySpeed);
     }
 }
 
