@@ -6,7 +6,6 @@ public class CameraFollow : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] float cameraLerp;
-    [SerializeField] Vector3 offset;
 
     private void LateUpdate()
     {
@@ -14,7 +13,7 @@ public class CameraFollow : MonoBehaviour
     }
     void CameraX()
     {
-        transform.position = Vector2.Lerp(transform.position + offset,player.transform.position, cameraLerp * Time.deltaTime);
+        transform.position = Vector2.Lerp(transform.position,player.transform.position, cameraLerp * Time.deltaTime);
     }
 
 }

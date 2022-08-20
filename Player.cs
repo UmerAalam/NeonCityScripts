@@ -11,16 +11,17 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D playerRb;
     float horizontalInput;
     bool isGrounded;
-
+    float groundDistance = 0.4f;
+    [SerializeField] LayerMask groundMask;
 
 
     void Start()
     {
-        isGrounded = false;
         playerRb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundDistance, groundMask);
         horizontalInput = Input.GetAxisRaw("Horizontal");
     }
     void FixedUpdate()
@@ -42,14 +43,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             playerRb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
-            isGrounded = false;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
         }
     }
 }
