@@ -31,7 +31,11 @@ public class Player : MonoBehaviour
     void Movement()
     {
         playerRb.AddForce(Vector2.right * moveSpeed * horizontalInput * Time.deltaTime,ForceMode2D.Impulse);
-        playerRb.AddTorque(torqueForce * horizontalInput * Time.deltaTime,ForceMode2D.Impulse);
+        playerRb.AddTorque(torqueForce * horizontalInput * Time.deltaTime, ForceMode2D.Impulse);
+        if (isGrounded)
+            torqueForce = 60f;
+        else
+            torqueForce = 0f;
     }
     void Jump()
     {
