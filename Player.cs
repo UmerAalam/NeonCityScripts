@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     bool isGrounded;
 
 
-
     void Start()
     {
         isGrounded = false;
@@ -48,6 +47,10 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+        if(collision.gameObject.CompareTag("Stairs"))
         {
             isGrounded = true;
         }
