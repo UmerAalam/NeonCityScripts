@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
-            playerRb.AddForce(Vector2.up * jumpForce);
+            playerRb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
             isGrounded = false;
         }
     }
