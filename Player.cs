@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D playerRb;
     float horizontalInput;
     bool isGrounded;
+    bool flyMode;
+    bool normalMode;
 
 
     void Start()
@@ -50,9 +52,17 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
         }
-        if(collision.gameObject.CompareTag("Stairs"))
+        if (collision.gameObject.CompareTag("Stairs"))
         {
             isGrounded = true;
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.transform.name == "")
+    }
+    void FlyMode()
+    {
+
     }
 }
