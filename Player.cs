@@ -11,17 +11,22 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D playerRb;
     float horizontalInput;
     bool isGrounded;
+    bool canFly;
     bool flyMode;
     bool normalMode;
+    bool canMove;
 
 
     void Start()
     {
+        canFly = false;
         isGrounded = false;
         playerRb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
+        CheckFlyMode();
+        CheckCanFly();
         horizontalInput = Input.GetAxisRaw("Horizontal");
     }
     void FixedUpdate()
@@ -31,8 +36,12 @@ public class Player : MonoBehaviour
     }
     void Movement()
     {
+        if(canMove)
+        {
+        playerRb.gravityScale = 2f;
         playerRb.AddForce(Vector2.right * moveSpeed * horizontalInput * Time.deltaTime,ForceMode2D.Impulse);
         playerRb.AddTorque(torqueForce * horizontalInput * Time.deltaTime, ForceMode2D.Impulse);
+        }
         if (isGrounded)
             torqueForce = 60f;
         else
@@ -59,10 +68,41 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.transform.name == "")
+        if(collision.gameObject.transform.name == "WingSuit")
+        {
+            Destroy(collision.gameObject);
+            canFly = true;
+        }
     }
     void FlyMode()
     {
+        playerRb.gravityScale = 0f;
 
     }
+    void CheckCanFly()
+    {
+        if (!canFly)
+            return;
+        else
+        {
+            if(Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                flyMode = true;
+                canMove = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                canMove = true;
+                flyMode = false;
+            }
+        }
+    }
+    void CheckFlyMode()
+    {
+        if(flyMode)
+        {
+            FlyMode();
+        }
+    }
 }
+
