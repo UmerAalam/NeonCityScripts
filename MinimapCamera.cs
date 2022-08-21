@@ -9,5 +9,7 @@ public class MinimapCamera : MonoBehaviour
     void LateUpdate()
     {
         Vector3 newPos = player.transform.position;
+        Quaternion rot = Quaternion.Euler(0,0,0);
+        transform.rotation = rot
     }
 }
